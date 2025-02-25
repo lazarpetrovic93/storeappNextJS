@@ -32,7 +32,7 @@ export default function CartPage() {
                 <img src={item.image} alt={item.title} className="w-16 h-16" />
                 <div className="ml-4">
                   <h2>{item.title}</h2>
-                  <p>${item.price}</p>
+                  <p className="text-orange">${item.price}</p>
                   <div className="flex items-center">
                     <button
                       onClick={() =>

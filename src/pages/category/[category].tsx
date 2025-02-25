@@ -13,14 +13,16 @@ export default function CategoryPage({
 }) {
   const { addToCart } = useCart();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingProductId, setLoadingProductId] = useState<number | null>(null);
 
   const memoizedProducts = useMemo(() => products, [products]);
 
   const handleOnClick = (product: CartItem) => {
-    setIsLoading(true);
+    setLoadingProductId(product.id);
     addToCart(product);
-    setTimeout(() => setIsLoading(false), 500);
+    setTimeout(() => {
+      setLoadingProductId(null);
+    }, 500);
   };
 
   if (router.isFallback) {
@@ -60,8 +62,9 @@ export default function CategoryPage({
               <button
                 className="mt-2 px-4 py-2 bg-primary text-white rounded transition-all hover:bg-white hover:text-primary hover:border-primary hover:border"
                 onClick={() => handleOnClick(product)}
+                disabled={loadingProductId === product.id}
               >
-                {isLoading ? "Adding..." : "Add to Cart"}
+                {loadingProductId === product.id ? "Adding..." : "Add to Cart"}
               </button>
             </li>
           ))}
