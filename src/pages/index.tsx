@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Shop({ categories }: { categories: string[] }) {
   return (
     <>
-      <div className="flex flex-row items-center justify-between mb-6 sticky top-0 h-20 p-6 bg-gray-100 border-b">
+      <div className="flex flex-row items-center justify-between mb-6 sticky top-0 h-20 p-6 bg-gray-100 border-b shadow-md z-50">
         <div className="flex-1"></div>
         <div className="flex-1 text-center font-bold sm:text-lg md:text-xl lg:text-2xl">
           Product Categories
@@ -21,7 +21,8 @@ export default function Shop({ categories }: { categories: string[] }) {
             <Link
               key={category}
               href={`/category/${category}`}
-              className="text-primary capitalize h-full w-full border p-4 text-center cursor-pointer rounded shadow-md"
+              className="text-primary capitalize h-full w-full border p-4 text-center cursor-pointer rounded shadow-md 
+hover:bg-primary hover:text-white hover:shadow-lg transition duration-300"
             >
               {category}
             </Link>

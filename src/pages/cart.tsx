@@ -5,8 +5,8 @@ export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, totalPrice } = useCart();
 
   return (
-    <div className="h-[calc(100vh-145px)] mt-[80px]">
-      <div className="w-full flex flex-row justify-between items-center mx-auto fixed top-0 h-20 p-6 bg-gray-100 border-b">
+    <div className="h-[calc(100vh-145px)]">
+      <div className="flex flex-row items-center justify-between sticky top-0 h-20 p-6 bg-gray-100 border-b shadow-md z-50">
         <Link href="/" className="text-primary flex-1">
           ⬅ Back
         </Link>
@@ -36,7 +36,12 @@ export default function CartPage() {
                   <div className="flex items-center">
                     <button
                       onClick={() =>
-                        updateQuantity(item.id, Math.max(1, item.quantity - 1))
+                        item.quantity - 1 === 0
+                          ? removeFromCart(item.id)
+                          : updateQuantity(
+                              item.id,
+                              Math.max(1, item.quantity - 1)
+                            )
                       }
                     >
                       -
@@ -59,7 +64,7 @@ export default function CartPage() {
                     </button>
                   </div>
                   <button
-                    className="ml-4 text-red-600"
+                    className="ml-[10px] text-red-600"
                     onClick={() => removeFromCart(item.id)}
                   >
                     Remove

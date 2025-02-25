@@ -29,7 +29,7 @@ export default function CategoryPage({
 
   return (
     <>
-      <div className="w-full flex flex-row justify-between items-center mx-auto sticky top-0 h-20 p-6 border-b bg-gray-100">
+      <div className="flex flex-row items-center justify-between mb-6 sticky top-0 h-20 p-6 bg-gray-100 border-b shadow-md z-50">
         <Link href="/" className="text-primary">
           ⬅ Back
         </Link>
