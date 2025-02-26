@@ -15,6 +15,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled = false,
   children,
   onClick,
+  ...rest
 }) => {
   const variantClasses = {
     primary:
@@ -32,6 +33,7 @@ const Button: React.FC<ButtonProps> = ({
         ${variantClasses[variant]} ${className}`}
       disabled={disabled || isLoading}
       onClick={onClick}
+      {...rest}
     >
       {isLoading ? (
         <svg

@@ -101,13 +101,13 @@ export default function CartPage() {
                     </Button>
                   </div>
                   <div className="flex items-center justify-center w-10">
-                    <button
+                    <Button
                       className="text-gray-500 hover:text-orange transition"
                       onClick={() => removeFromCart(item.id)}
                       data-testid="delete-button"
                     >
                       <FontAwesomeIcon icon={faTrash} size="lg" />
-                    </button>
+                    </Button>
                   </div>
                 </li>
               ))}
