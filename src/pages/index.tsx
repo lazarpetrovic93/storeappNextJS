@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { useCart } from "@/context/CartContext";
+import CartIcon from "@/components/CartIcon";
 
 export default function Shop({ categories }: { categories: string[] }) {
+  const { cart } = useCart();
   return (
     <>
       <div className="flex flex-row items-center justify-between mb-6 sticky top-0 h-20 p-6 bg-gray-100 border-b shadow-md z-50">
@@ -8,11 +11,7 @@ export default function Shop({ categories }: { categories: string[] }) {
         <div className="flex-1 text-center font-bold sm:text-lg md:text-xl lg:text-2xl">
           Product Categories
         </div>
-        <div className="flex-1 flex justify-end">
-          <Link href="/cart" className="text-2xl">
-            🛒
-          </Link>
-        </div>
+        <CartIcon />
       </div>
 
       <div className="container mx-auto p-6">
