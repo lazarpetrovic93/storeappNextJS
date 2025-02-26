@@ -1,8 +1,9 @@
+import React from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import CartIcon from "@/components/CartIcon";
 
-export default function Shop({ categories }: { categories: string[] }) {
+export default function MainPage({ categories }: { categories: string[] }) {
   const { cart } = useCart();
   return (
     <>
