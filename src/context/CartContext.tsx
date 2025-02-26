@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   useContext,
   useReducer,
@@ -28,7 +28,7 @@ const initialState: CartState = {
   cart: [],
 };
 
-function cartReducer(state: CartState, action: CartAction): CartState {
+export function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case "ADD_TO_CART":
       const exists = state.cart.find((item) => item.id === action.payload.id);

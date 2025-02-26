@@ -1,3 +1,4 @@
+import React from "react";
 import { CartItem, useCart } from "@/context/CartContext";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -83,6 +84,7 @@ export default function CartPage() {
                     <input
                       type="number"
                       value={item.quantity}
+                      data-testid="quantity-input"
                       className="w-12 text-center mx-2 border rounded"
                       onChange={(e) =>
                         updateQuantity(
@@ -102,6 +104,7 @@ export default function CartPage() {
                     <button
                       className="text-gray-500 hover:text-orange transition"
                       onClick={() => removeFromCart(item.id)}
+                      data-testid="delete-button"
                     >
                       <FontAwesomeIcon icon={faTrash} size="lg" />
                     </button>
