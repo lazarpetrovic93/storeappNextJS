@@ -20,7 +20,7 @@ export default function Shop({ categories }: { categories: string[] }) {
             <Link
               key={category}
               href={`/category/${category}`}
-              className="text-primary capitalize h-full w-full border p-4 text-center cursor-pointer rounded shadow-md 
+              className="text-primary bg-white capitalize h-full w-full border p-4 text-center cursor-pointer rounded shadow-md 
 hover:bg-primary hover:text-white hover:shadow-lg transition duration-300"
             >
               {category}

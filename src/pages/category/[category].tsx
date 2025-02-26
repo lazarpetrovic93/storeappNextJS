@@ -66,10 +66,10 @@ export default function CategoryPage({
                   alt={product.title}
                   className="w-32 h-32 object-contain"
                 />
-                <h2 className="text-lg font-semibold">{product.title}</h2>
+                <h2 className="text-base font-semibold">{product.title}</h2>
               </div>
               <div className="flex flex-col items-center w-full mt-auto">
-                <p className="text-orange font-bold">
+                <p className="text-orange font-medium">
                   ${product.price.toFixed(2)}
                 </p>
                 <Button
@@ -77,6 +77,7 @@ export default function CategoryPage({
                   disabled={loadingProductId === product.id}
                   children={<>Add to Cart</>}
                   variant="primary"
+                  className="h-10 w-32"
                   isLoading={product.id === loadingProductId}
                 />
               </div>
