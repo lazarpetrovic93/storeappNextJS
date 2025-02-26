@@ -30,15 +30,17 @@ export default function Tooltip({
     }
   }, [isVisible]);
 
+  const handleOnClick = () => {
+    setIsVisible(true);
+    setTimeout(() => setIsVisible(false), 3000);
+  };
+
   return (
     <div
       className="relative flex-1 min-w-0 flex items-center group"
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
-      onClick={() => {
-        setIsVisible(true);
-        setTimeout(() => setIsVisible(false), 3000);
-      }}
+      onClick={handleOnClick}
     >
       <div className="w-full min-w-0 truncate">{children}</div>
       {isVisible && (
