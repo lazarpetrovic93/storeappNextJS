@@ -75,11 +75,11 @@ export default function CartPage() {
 
                   <div className="flex items-center justify-center w-full">
                     <Button
-                      children={<>-</>}
                       onClick={() => handleMinusButtonClick(item)}
                       className="px-2"
-                    />
-
+                    >
+                      -
+                    </Button>
                     <input
                       type="number"
                       value={item.quantity}
@@ -92,10 +92,11 @@ export default function CartPage() {
                       }
                     />
                     <Button
-                      children={<>+</>}
                       onClick={() => handlePlusButtonClick(item)}
                       className="px-2"
-                    />
+                    >
+                      +
+                    </Button>
                   </div>
                   <div className="flex items-center justify-center w-10">
                     <button

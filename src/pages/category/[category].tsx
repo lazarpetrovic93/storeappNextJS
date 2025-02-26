@@ -75,11 +75,12 @@ export default function CategoryPage({
                 <Button
                   onClick={() => handleOnClick(product)}
                   disabled={loadingProductId === product.id}
-                  children={<>Add to Cart</>}
                   variant="primary"
                   className="h-10 w-32"
                   isLoading={product.id === loadingProductId}
-                />
+                >
+                  Add to Cart
+                </Button>
               </div>
             </li>
           ))}

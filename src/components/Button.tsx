@@ -1,5 +1,4 @@
 import React from "react";
-
 interface ButtonProps {
   className?: string;
   variant?: "primary" | "secondary" | "danger" | "";
