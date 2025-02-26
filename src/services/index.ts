@@ -1,11 +1,29 @@
-export async function fetchCategories() {
-    const res = await fetch("https://fakestoreapi.com/products/categories");
-    if (!res.ok) throw new Error("Failed to fetch categories");
-    return res.json();
+const BASE_URL = "https://fakestoreapi.com/products";
+
+async function fetchData<T>(endpoint: string): Promise<T> {
+    try {
+        const res = await fetch(`${BASE_URL}/${endpoint}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!res.ok) {
+            throw new Error(`Error fetching data: ${res.status} ${res.statusText}`);
+        }
+
+        return await res.json();
+    } catch (error) {
+        console.error("Fetch error:", error);
+        throw error;
+    }
 }
 
-export async function fetchProductsByCategory(category: string) {
-    const res = await fetch(`https://fakestoreapi.com/products/category/${category}`);
-    if (!res.ok) throw new Error("Failed to fetch products");
-    return res.json();
+export function fetchCategories() {
+    return fetchData<string[]>("categories");
+}
+
+export function fetchProductsByCategory(category: string) {
+    return fetchData<any[]>(`category/${encodeURIComponent(category)}`);
 }
