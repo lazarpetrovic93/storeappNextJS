@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState, useMemo } from "react";
 import { CartItem, useCart } from "@/context/CartContext";
 import { fetchProductsByCategory } from "@/services";
+import Image from "next/image";
 import Link from "next/link";
 import CartIcon from "@/components/CartIcon";
 import Button from "@/components/Button";
@@ -18,8 +19,6 @@ export default function CategoryPage({
   const { addToCart } = useCart();
   const router = useRouter();
   const [loadingProductId, setLoadingProductId] = useState<number | null>(null);
-
-  const memoizedProducts = useMemo(() => products, [products]);
 
   const handleOnClick = (product: CartItem) => {
     setLoadingProductId(product.id);
@@ -48,20 +47,20 @@ export default function CategoryPage({
         </Link>
 
         <div className="font-bold capitalize md:text-xl lg:text-2xl flex-1 flex flex-row justify-center">
-          {category} ({memoizedProducts.length})
+          {category} ({products.length})
         </div>
         <CartIcon />
       </div>
 
       <div className="container mx-auto p-6">
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {memoizedProducts.map((product) => (
+          {products.map((product) => (
             <li
               key={product.id}
               className="border p-4 flex flex-col justify-between items-center text-center bg-white shadow-md rounded-lg h-full"
             >
               <div className="flex flex-col items-center gap-2">
-                <img
+                <Image
                   src={product.image}
                   alt={product.title}
                   className="w-32 h-32 object-contain"

@@ -1,6 +1,7 @@
 import React from "react";
 import { CartItem, useCart } from "@/context/CartContext";
 import Link from "next/link";
+import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "@/components/Tooltip";
@@ -44,10 +45,7 @@ export default function CartPage() {
             <span className="text-center">Quantity</span>
             <span className="text-center"></span>
           </div>
-          <div
-            className="overflow-y-auto scrollbar-hidden pb-20"
-            style={{ height: "calc(100vh - 190px)" }}
-          >
+          <div className="overflow-y-auto scrollbar-hidden pb-20 h-[calc(100vh-190px)]">
             <ul>
               {cart.map((item) => (
                 <li
@@ -56,7 +54,7 @@ export default function CartPage() {
                 >
                   <div className="flex gap-3 min-w-0 flex-col lg:flex-row md:flex-row">
                     <div className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0">
-                      <img
+                      <Image
                         src={item.image}
                         alt={item.title}
                         className="w-full h-full object-contain aspect-[1/1] rounded"
