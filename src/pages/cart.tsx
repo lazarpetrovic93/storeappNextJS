@@ -53,16 +53,18 @@ export default function CartPage() {
                   className="grid grid-cols-[auto_100px_120px_60px] gap-3 p-4 border-b items-center"
                 >
                   <div className="flex gap-3 min-w-0 flex-col lg:flex-row md:flex-row">
-                    <div className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0">
+                    <div className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 flex">
                       <Image
                         src={item.image}
                         alt={item.title}
-                        className="w-full h-full object-contain aspect-[1/1] rounded"
+                        width={64}
+                        height={64}
+                        className="object-contain rounded"
                       />
                     </div>
 
-                    <Tooltip text={item.title}>
-                      <h2 className="text-base truncate w-full font-medium">
+                    <Tooltip text={item.title} position="bottom">
+                      <h2 className="text-base truncate w-full font-medium lg:mt-0 md:mt-0 sm:mt-3">
                         {item.title}
                       </h2>
                     </Tooltip>

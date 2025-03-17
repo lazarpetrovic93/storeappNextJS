@@ -25,5 +25,5 @@ export function fetchCategories() {
 }
 
 export function fetchProductsByCategory(category: string) {
-    return fetchData<any[]>(`category/${encodeURIComponent(category)}`);
+    return fetchData<string[]>(`category/${encodeURIComponent(category)}`);
 }

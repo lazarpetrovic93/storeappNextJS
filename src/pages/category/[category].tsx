@@ -8,6 +8,7 @@ import CartIcon from "@/components/CartIcon";
 import Button from "@/components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { GetServerSidePropsContext } from "next";
 
 export default function CategoryPage({
   category,
@@ -63,7 +64,9 @@ export default function CategoryPage({
                 <Image
                   src={product.image}
                   alt={product.title}
-                  className="w-32 h-32 object-contain"
+                  className="object-contain"
+                  height={128}
+                  width={128}
                 />
                 <h2 className="text-base font-semibold">{product.title}</h2>
               </div>
@@ -89,8 +92,13 @@ export default function CategoryPage({
   );
 }
 
-export async function getServerSideProps({ params }: any) {
+export async function getServerSideProps({
+  params,
+}: GetServerSidePropsContext) {
   try {
+    if (!params?.category || typeof params.category !== "string") {
+      return { notFound: true };
+    }
     const products = await fetchProductsByCategory(params.category);
     return { props: { category: params.category, products } };
   } catch {

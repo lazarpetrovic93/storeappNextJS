@@ -50,21 +50,4 @@ describe("Tooltip Component", () => {
       expect(screen.queryByText("Tooltip content")).not.toBeInTheDocument();
     });
   });
-
-  it("shows tooltip on click and disappears after 3 seconds", async () => {
-    render(
-      <Tooltip text="Tooltip content">
-        <span>Click me</span>
-      </Tooltip>
-    );
-    fireEvent.click(screen.getByText("Click me"));
-    expect(screen.getByText("Tooltip content")).toBeInTheDocument();
-    act(() => {
-      jest.advanceTimersByTime(3000);
-    });
-
-    await waitFor(() => {
-      expect(screen.queryByText("Tooltip content")).not.toBeInTheDocument();
-    });
-  });
 });

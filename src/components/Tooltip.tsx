@@ -16,46 +16,47 @@ export default function Tooltip({
     "left" | "right" | "center"
   >("center");
   const tooltipRef = useRef<HTMLDivElement | null>(null);
+  const parentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (tooltipRef.current) {
-      const rect = tooltipRef.current.getBoundingClientRect();
-      if (rect.left < 0) {
-        setTooltipPosition("right");
-      } else if (rect.right > window.innerWidth) {
-        setTooltipPosition("left");
-      } else {
-        setTooltipPosition("center");
-      }
+    if (!isVisible || !tooltipRef.current || !parentRef.current) return;
+
+    const tooltipRect = tooltipRef.current.getBoundingClientRect();
+    const parentRect = parentRef.current.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+
+    if (tooltipRect.left < 0) {
+      setTooltipPosition("right");
+    } else if (tooltipRect.right > viewportWidth) {
+      setTooltipPosition("left");
+    } else {
+      setTooltipPosition("center");
     }
   }, [isVisible]);
 
-  const handleOnClick = () => {
-    setIsVisible(true);
-    setTimeout(() => setIsVisible(false), 3000);
-  };
-
   return (
     <div
-      className="relative flex-1 min-w-0 flex items-center group"
+      ref={parentRef}
+      className="relative flex-1 min-w-0 flex items-center"
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
-      onClick={handleOnClick}
+      onClick={() => setIsVisible(true)}
+      role="tooltip"
     >
       <div className="w-full min-w-0 truncate">{children}</div>
       {isVisible && (
         <div
           ref={tooltipRef}
-          className={`absolute ${
-            position === "top" ? "bottom-full mb-2" : "top-full mt-2"
-          } max-w-[400px] bg-gray-800 text-white text-xs rounded p-2 min-h-[30px] shadow-lg text-center break-words whitespace-normal opacity-100 transition-opacity duration-300
-          ${
-            tooltipPosition === "left"
-              ? "left-0"
-              : tooltipPosition === "right"
-              ? "right-0"
-              : "left-1/2 -translate-x-1/2"
-          }`}
+          className={`absolute z-50 max-w-[400px] bg-gray-800 text-white text-xs rounded p-2 shadow-lg text-center break-words whitespace-normal opacity-100 transition-opacity duration-300
+            ${position === "top" ? "bottom-full mb-2" : "top-full mt-2"}
+            ${
+              tooltipPosition === "left"
+                ? "left-0"
+                : tooltipPosition === "right"
+                ? "left-3"
+                : "left-1/2 -translate-x-1/2"
+            }
+          `}
         >
           {text}
         </div>
