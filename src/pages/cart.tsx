@@ -7,9 +7,11 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "@/components/Tooltip";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import Button from "@/components/Button";
+import useIsMobile from "@/hooks/useMobile";
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, totalPrice } = useCart();
+  const isMobile = useIsMobile();
 
   const handleMinusButtonClick = (item: CartItem) =>
     item.quantity - 1 === 0
@@ -52,22 +54,35 @@ export default function CartPage() {
                   key={item.id}
                   className="grid grid-cols-[auto_100px_120px_60px] gap-3 p-4 border-b items-center"
                 >
-                  <div className="flex gap-3 min-w-0 flex-col lg:flex-row md:flex-row">
+                  <div className="flex gap-3 min-w-0 flex-col lg:flex-row md:flex-row items-center">
                     <div className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 flex">
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        width={64}
-                        height={64}
-                        className="object-contain rounded"
-                      />
+                      {isMobile ? (
+                        <Tooltip text={item.title} position="bottom">
+                          <Image
+                            src={item.image}
+                            alt={item.title}
+                            width={64}
+                            height={64}
+                            className="object-contain rounded"
+                          />
+                        </Tooltip>
+                      ) : (
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          width={64}
+                          height={64}
+                          className="object-contain rounded"
+                        />
+                      )}
                     </div>
-
-                    <Tooltip text={item.title} position="bottom">
-                      <h2 className="text-base truncate w-full font-medium lg:mt-0 md:mt-0 sm:mt-3">
-                        {item.title}
-                      </h2>
-                    </Tooltip>
+                    {!isMobile && (
+                      <Tooltip text={item.title} position="bottom">
+                        <h2 className="text-base truncate w-full font-medium lg:mt-0 md:mt-0 sm:mt-3">
+                          {item.title}
+                        </h2>
+                      </Tooltip>
+                    )}
                   </div>
 
                   <p className="text-right text-orange font-medium w-20">

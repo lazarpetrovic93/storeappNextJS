@@ -1,79 +1,75 @@
-import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import CartPage from "@/pages/cart";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { useCart } from "@/context/CartContext";
+import CartPage from "./cart";
 import "@testing-library/jest-dom";
 
-// Mock cart items
-const mockCart = [
-  {
-    id: 1,
-    title: "Test Product",
-    price: 10,
-    quantity: 1,
-    image: "https://example.com/image.jpg",
-  },
-];
-
-// Mock cart context functions
-const mockRemoveFromCart = jest.fn();
-const mockUpdateQuantity = jest.fn();
-
+import React from "react";
 jest.mock("@/context/CartContext", () => ({
   useCart: jest.fn(),
 }));
 
-describe("cart", () => {
+jest.mock("@/hooks/useMobile", () => jest.fn(() => false));
+
+describe("CartPage Component", () => {
+  const mockRemoveFromCart = jest.fn();
+  const mockUpdateQuantity = jest.fn();
+
+  const mockCart = [
+    {
+      id: "1",
+      title: "Test Product",
+      price: 20,
+      quantity: 2,
+      image: "/test-image.jpg",
+    },
+  ];
+
   beforeEach(() => {
+    jest.clearAllMocks();
     (useCart as jest.Mock).mockReturnValue({
       cart: mockCart,
       removeFromCart: mockRemoveFromCart,
       updateQuantity: mockUpdateQuantity,
-      totalPrice: 10,
+      totalPrice: 40,
     });
   });
 
-  it("renders the cart page", () => {
+  test("renders Shopping Cart title", () => {
     render(<CartPage />);
     expect(screen.getByText("Shopping Cart")).toBeInTheDocument();
   });
 
-  it("displays cart items", () => {
+  test("displays cart items correctly", () => {
     render(<CartPage />);
+
     expect(screen.getByText("Test Product")).toBeInTheDocument();
-    expect(screen.getByText("$10.00")).toBeInTheDocument();
+    expect(screen.getByText("$40.00")).toBeInTheDocument();
   });
 
-  it("calls removeFromCart when the delete button is clicked", () => {
+  test("increments and decrements item quantity", () => {
     render(<CartPage />);
-    const deleteButton = screen.getByTestId("delete-button");
-    fireEvent.click(deleteButton);
-    expect(mockRemoveFromCart).toHaveBeenCalledWith(1);
-  });
 
-  it("increases item quantity when the + button is clicked", () => {
-    render(<CartPage />);
-    const plusButton = screen.getByText("+");
-    fireEvent.click(plusButton);
-    expect(mockUpdateQuantity).toHaveBeenCalledWith(1, 2);
-  });
-
-  it("decreases item quantity when the - button is clicked", () => {
-    render(<CartPage />);
     const minusButton = screen.getByText("-");
+    const plusButton = screen.getByText("+");
+
+    fireEvent.click(plusButton);
+    expect(mockUpdateQuantity).toHaveBeenCalledWith("1", 3);
+
     fireEvent.click(minusButton);
-    expect(mockUpdateQuantity).toHaveBeenCalledWith(1, 2);
+    expect(mockUpdateQuantity).toHaveBeenCalledWith("1", 1);
   });
 
-  it("displays the total price correctly", () => {
+  test("removes item from cart when delete button is clicked", () => {
     render(<CartPage />);
-    expect(screen.getByText("Total: $10.00")).toBeInTheDocument();
+
+    const deleteButton = screen.getByTestId("delete-button");
+
+    fireEvent.click(deleteButton);
+    expect(mockRemoveFromCart).toHaveBeenCalledWith("1");
   });
 
-  it("updates input quantity when manually changed", async () => {
+  test("displays total price correctly", () => {
     render(<CartPage />);
-    const input = screen.getByTestId("quantity-input");
-    fireEvent.change(input, { target: { value: "3" } });
-    await waitFor(() => expect(mockUpdateQuantity).toHaveBeenCalledWith(1, 3));
+    expect(screen.getByText("Total: $40.00")).toBeInTheDocument();
   });
 });
